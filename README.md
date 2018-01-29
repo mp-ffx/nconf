@@ -391,8 +391,9 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
 nconf.file('secure-file', {
   file: 'path/to/secure-file.json',
   secure: {
-    secret: 'super-secretzzz-keyzz',
-    alg: 'aes-256-ctr'
+    key: 'super-secretzzz-keyzzzzzzzzzzzzz',
+    iv: 'some super iv'
+    alg: 'aes-256-gcm'
   }
 })
 ```
