@@ -8,8 +8,7 @@ Hierarchical node.js configuration with files, environment variables, command-li
 Using nconf is easy; it is designed to be a simple key-value store with support for both local and remote storage. Keys are namespaced and delimited by `:`. Let's dive right into sample usage:
 
 ``` js
-  var fs    = require('fs'),
-      nconf = require('nconf');
+  var nconf = require('nconf');
 
   //
   // Setup nconf to use (in-order):
@@ -39,7 +38,7 @@ Using nconf is easy; it is designed to be a simple key-value store with support 
   // Save the configuration object to disk
   //
   nconf.save(function (err) {
-    fs.readFile('path/to/your/config.json', function (err, data) {
+    require('fs').readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.parse(data.toString()))
     });
   });
@@ -230,7 +229,7 @@ The input `obj` contains two properties passed in the following format:
 
 The transformation function may alter both the key and the value.
 
-The function may return either an object in the asme format as the input or a value that evaluates to false.
+The function may return either an object in the same format as the input or a value that evaluates to false.
 If the return value is falsey, the entry will be dropped from the store, otherwise it will replace the original key/value.
 
 *Note: If the return value doesn't adhere to the above rules, an exception will be thrown.*
@@ -282,6 +281,7 @@ By default, the env variables values are loaded into the configuration as string
 #### Options
 
 ##### `lowerCase: {true|false}` (default: `false`)
+DONT USE THIS! (not supported currently...)
 Convert all input keys to lower case. Values are not modified.
 
 If this option is enabled, all calls to `nconf.get()` must pass in a lowercase string (e.g. `nconf.get('port')`)
@@ -398,17 +398,19 @@ nconf.file('secure-file', {
 })
 ```
 
-This will encrypt each key using [`crypto.createCipher`](https://nodejs.org/api/crypto.html#crypto_crypto_createcipher_algorithm_password), defaulting to `aes-256-ctr`. The encrypted file contents will look like this:
+This will encrypt each key using [`crypto.createCipheriv`](https://nodejs.org/api/crypto.html#crypto_crypto_createcipheriv_algorithm_key_iv_options), defaulting to `aes-256-ctr`. The encrypted file contents will look like this:
 
 ```
 {
   "config-key-name": {
     "alg": "aes-256-ctr", // cipher used
-    "value": "af07fbcf"   // encrypted contents
+    "value": "af07fbcf",   // encrypted contents
+    "iv": "49e7803a2a5ef98c7a51a8902b76dd10" // initialization vector
   },
   "another-config-key": {
     "alg": "aes-256-ctr",   // cipher used
-    "value": "e310f6d94f13" // encrypted contents
+    "value": "e310f6d94f13", // encrypted contents
+    "iv": "b654e01aed262f37d0acf200be193985" // initialization vector
   },
 }
 ```

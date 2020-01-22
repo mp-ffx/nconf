@@ -19,22 +19,22 @@
     "plugabble"
   ],
   "dependencies": {
-    "async": "^2.3.0",
-    "ini": "^1.3.0",
+    "async": "^3.1.0",
+    "ini": "^1.3.5",
     "lodash.camelcase": "^4.3.0",
-    "yargs": "^10.0.3"
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.0",
-    "eslint": "^4.9.0",
-    "istanbul": "^0.4.1",
-    "nconf-yaml": "^1.0.2",
-    "vows": "0.8.x"
+    "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "istanbul": "^0.4.5",
+    "jest": "^25.1.0",
+    "nconf-yaml": "^1.0.2"
   },
   "main": "./lib/nconf",
   "scripts": {
-    "test": "vows test/*-test.js test/**/*-test.js --spec",
-    "cover": "istanbul cover vows -- test/*-test.js test/**/*-test.js  --spec",
+    "test": "jest --verbose",
+    "cover": "jest --coverage",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "lint": "eslint ."
   },
